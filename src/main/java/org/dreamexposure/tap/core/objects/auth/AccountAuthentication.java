@@ -46,7 +46,7 @@ public class AccountAuthentication {
         refreshToken = _token;
     }
     
-    public void setAccountId(String _token) {
+    public void setAccessToken(String _token) {
         accessToken = _token;
     }
     
