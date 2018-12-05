@@ -1,5 +1,7 @@
 package org.dreamexposure.tap.core.objects.confirmation;
 
+import org.json.JSONObject;
+
 import java.util.UUID;
 
 /**
@@ -30,5 +32,21 @@ public class EmailConfirmation {
     
     public void setCode(String _code) {
         code = _code;
+    }
+    
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        
+        json.put("id", userId.toString());
+        json.put("code", code);
+        
+        return json;
+    }
+    
+    public EmailConfirmation fromJson(JSONObject json) {
+        userId = UUID.fromString(json.getString("id"));
+        code = json.getString("code");
+        
+        return this;
     }
 }
