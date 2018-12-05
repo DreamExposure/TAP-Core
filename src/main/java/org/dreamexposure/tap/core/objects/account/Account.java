@@ -102,6 +102,10 @@ public class Account {
         verified = _verified;
     }
     
+    public void setEmailConfirmed(boolean _confirmed) {
+        emailConfirmed = _confirmed;
+    }
+    
     public void setAdmin(boolean _admin) {
         admin = _admin;
     }
