@@ -24,6 +24,9 @@ public class Account {
     private boolean safeSearch;
     
     private boolean verified;
+    private boolean emailConfirmed;
+    
+    private boolean admin;
     
     //Getters
     public UUID getAccountId() {
@@ -56,6 +59,14 @@ public class Account {
     
     public boolean isVerified() {
         return verified;
+    }
+    
+    public boolean isEmailConfirmed() {
+        return emailConfirmed;
+    }
+    
+    public boolean isAdmin() {
+        return admin;
     }
     
     //Setters
@@ -91,6 +102,10 @@ public class Account {
         verified = _verified;
     }
     
+    public void setAdmin(boolean _admin) {
+        admin = _admin;
+    }
+    
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("id", accountId.toString());
@@ -101,6 +116,8 @@ public class Account {
         json.put("birthday", birthday);
         json.put("safe-search", safeSearch);
         json.put("verified", verified);
+        json.put("email-confirmed", emailConfirmed);
+        json.put("admin", admin);
         
         return json;
     }
@@ -114,6 +131,8 @@ public class Account {
         birthday = json.getString("birthday");
         safeSearch = json.getBoolean("safe-search");
         verified = json.getBoolean("verified");
+        emailConfirmed = json.getBoolean("email-confirmed");
+        admin = json.getBoolean("admin");
         
         return this;
     }

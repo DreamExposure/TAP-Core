@@ -27,6 +27,8 @@ public class Post implements IPost {
     private String title;
     private String body;
     
+    private boolean nsfw;
+    
     
     //Getters
     public UUID getId() {
@@ -66,6 +68,10 @@ public class Post implements IPost {
         return body;
     }
     
+    public boolean isNsfw() {
+        return nsfw;
+    }
+    
     //Setters
     public void setId(UUID _id) {
         id = _id;
@@ -103,6 +109,10 @@ public class Post implements IPost {
         body = _body;
     }
     
+    public void setNsfw(boolean _nsfw) {
+        nsfw = _nsfw;
+    }
+    
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         
@@ -115,6 +125,7 @@ public class Post implements IPost {
         json.put("type", type.name());
         json.put("title", title);
         json.put("body", body);
+        json.put("nsfw", nsfw);
         
         return json;
     }
@@ -129,6 +140,7 @@ public class Post implements IPost {
         type = PostType.valueOf(json.getString("type"));
         title = json.getString("title");
         body = json.getString("body");
+        nsfw = json.getBoolean("nsfw");
         
         return this;
     }

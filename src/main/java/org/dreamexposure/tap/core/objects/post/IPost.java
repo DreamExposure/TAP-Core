@@ -36,6 +36,8 @@ public interface IPost {
     
     String getBody();
     
+    boolean isNsfw();
+    
     //Setters
     void setId(UUID _id);
     
@@ -54,6 +56,8 @@ public interface IPost {
     void setTitle(String _title);
     
     void setBody(String _body);
+    
+    void setNsfw(boolean _nsfw);
     
     JSONObject toJson();
     
