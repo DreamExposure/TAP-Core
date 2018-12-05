@@ -1,5 +1,7 @@
 package org.dreamexposure.tap.core.objects.account;
 
+import org.json.JSONObject;
+
 import java.util.UUID;
 
 /**
@@ -20,6 +22,8 @@ public class Account {
     private String birthday;
     
     private boolean safeSearch;
+    
+    private boolean verified;
     
     //Getters
     public UUID getAccountId() {
@@ -50,6 +54,10 @@ public class Account {
         return safeSearch;
     }
     
+    public boolean isVerified() {
+        return verified;
+    }
+    
     //Setters
     public void setAccountId(UUID _accountId) {
         accountId = _accountId;
@@ -77,5 +85,36 @@ public class Account {
     
     public void setSafeSearch(boolean _safeSearch) {
         safeSearch = _safeSearch;
+    }
+    
+    public void setVerified(boolean _verified) {
+        verified = _verified;
+    }
+    
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("id", accountId.toString());
+        json.put("username", username);
+        json.put("email", email);
+        //Skip hashed password.
+        json.put("phone-number", phoneNumber);
+        json.put("birthday", birthday);
+        json.put("safe-search", safeSearch);
+        json.put("verified", verified);
+        
+        return json;
+    }
+    
+    public Account fromJson(JSONObject json) {
+        accountId = UUID.fromString(json.getString("id"));
+        username = json.getString("username");
+        email = json.getString("email");
+        //Skip hashed password
+        phoneNumber = json.getString("phone-number");
+        birthday = json.getString("birthday");
+        safeSearch = json.getBoolean("safe-search");
+        verified = json.getBoolean("verified");
+        
+        return this;
     }
 }

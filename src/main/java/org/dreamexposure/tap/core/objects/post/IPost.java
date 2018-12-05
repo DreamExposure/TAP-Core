@@ -1,7 +1,9 @@
 package org.dreamexposure.tap.core.objects.post;
 
+import org.dreamexposure.tap.core.enums.post.PostType;
 import org.dreamexposure.tap.core.objects.account.Account;
 import org.dreamexposure.tap.core.objects.blog.Blog;
+import org.json.JSONObject;
 
 import java.util.UUID;
 
@@ -24,9 +26,11 @@ public interface IPost {
     
     String getPermaLink();
     
-    String getFullLink();
+    String getFullUrl();
     
     long getTimestamp();
+    
+    PostType getPostType();
     
     String getTitle();
     
@@ -41,11 +45,17 @@ public interface IPost {
     
     void setPermaLink(String _permaLink);
     
-    void setFullLink(String _fullLink);
+    void setFullUrl(String _fullLink);
     
     void setTimestamp(long _timestamp);
+    
+    void setPostType(PostType _type);
     
     void setTitle(String _title);
     
     void setBody(String _body);
+    
+    JSONObject toJson();
+    
+    IPost fromJson(JSONObject json);
 }

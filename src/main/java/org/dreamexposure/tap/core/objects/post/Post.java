@@ -1,7 +1,9 @@
 package org.dreamexposure.tap.core.objects.post;
 
+import org.dreamexposure.tap.core.enums.post.PostType;
 import org.dreamexposure.tap.core.objects.account.Account;
 import org.dreamexposure.tap.core.objects.blog.Blog;
+import org.json.JSONObject;
 
 import java.util.UUID;
 
@@ -18,7 +20,8 @@ public class Post implements IPost {
     private Account creator;
     private Blog originBlog;
     private String permaLink;
-    private String fullLink;
+    private String fullUrl;
+    private PostType type;
     private long timestamp;
     
     private String title;
@@ -42,13 +45,17 @@ public class Post implements IPost {
         return permaLink;
     }
     
-    public String getFullLink() {
-        return fullLink;
+    public String getFullUrl() {
+        return fullUrl;
     }
     
     
     public long getTimestamp() {
         return timestamp;
+    }
+    
+    public PostType getPostType() {
+        return type;
     }
     
     public String getTitle() {
@@ -76,12 +83,16 @@ public class Post implements IPost {
         permaLink = _permaLink;
     }
     
-    public void setFullLink(String _fullLink) {
-        fullLink = _fullLink;
+    public void setFullUrl(String _fullUrl) {
+        fullUrl = _fullUrl;
     }
     
     public void setTimestamp(long _timestamp) {
         timestamp = _timestamp;
+    }
+    
+    public void setPostType(PostType _type) {
+        type = _type;
     }
     
     public void setTitle(String _title) {
@@ -90,5 +101,35 @@ public class Post implements IPost {
     
     public void setBody(String _body) {
         body = _body;
+    }
+    
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        
+        json.put("id", id.toString());
+        json.put("creator", creator.toJson());
+        json.put("origin-blog", originBlog.toJson());
+        json.put("permalink", permaLink);
+        json.put("full-url", fullUrl);
+        json.put("timestamp", timestamp);
+        json.put("type", type.name());
+        json.put("title", title);
+        json.put("body", body);
+        
+        return json;
+    }
+    
+    public IPost fromJson(JSONObject json) {
+        id = UUID.fromString(json.getString("id"));
+        creator = new Account().fromJson(json.getJSONObject("creator"));
+        originBlog = new Blog().fromJson(json.getJSONObject("origin-blog"));
+        permaLink = json.getString("permalink");
+        fullUrl = json.getString("full-url");
+        timestamp = json.getLong("timestamp");
+        type = PostType.valueOf(json.getString("type"));
+        title = json.getString("title");
+        body = json.getString("body");
+        
+        return this;
     }
 }

@@ -1,5 +1,8 @@
 package org.dreamexposure.tap.core.objects.blog;
 
+import org.dreamexposure.tap.core.enums.blog.BlogType;
+import org.json.JSONObject;
+
 import java.util.UUID;
 
 /**
@@ -16,8 +19,8 @@ public class PersonalBlog extends Blog {
     private boolean displayAge;
     
     
-    public PersonalBlog(String baseUrl) {
-        super(baseUrl);
+    public PersonalBlog() {
+        setType(BlogType.PERSONAL);
     }
     
     //Getters
@@ -36,5 +39,23 @@ public class PersonalBlog extends Blog {
     
     public void setDisplayAge(boolean _displayAge) {
         displayAge = _displayAge;
+    }
+    
+    @Override
+    public JSONObject toJson() {
+        JSONObject base = super.toJson();
+        
+        base.put("owner-id", ownerId.toString());
+        base.put("display-age", displayAge);
+        
+        return base;
+    }
+    
+    @Override
+    public PersonalBlog fromJson(JSONObject json) {
+        ownerId = UUID.fromString(json.getString("owner-id"));
+        displayAge = json.getBoolean("display-age");
+        
+        return this;
     }
 }

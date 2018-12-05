@@ -1,5 +1,8 @@
 package org.dreamexposure.tap.core.objects.blog;
 
+import org.dreamexposure.tap.core.enums.blog.BlogType;
+import org.json.JSONObject;
+
 import java.util.UUID;
 
 /**
@@ -16,6 +19,8 @@ public class Blog {
     private String baseUrl;
     private String completeUrl;
     
+    private BlogType type;
+    
     private String name;
     private String description;
     
@@ -25,10 +30,6 @@ public class Blog {
     
     private boolean allowUnder18;
     private boolean nsfw;
-    
-    public Blog(String _baseUrl) {
-        baseUrl = _baseUrl;
-    }
     
     //Getters
     public UUID getBlogId() {
@@ -41,6 +42,10 @@ public class Blog {
     
     public String getCompleteUrl() {
         return completeUrl;
+    }
+    
+    public BlogType getType() {
+        return type;
     }
     
     public String getName() {
@@ -84,6 +89,10 @@ public class Blog {
         completeUrl = _completeUrl;
     }
     
+    public void setType(BlogType _type) {
+        type = _type;
+    }
+    
     public void setName(String _name) {
         name = _name;
     }
@@ -110,5 +119,39 @@ public class Blog {
     
     public void setNsfw(boolean _nsfw) {
         nsfw = _nsfw;
+    }
+    
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        
+        json.put("id", blogId.toString());
+        json.put("base-url", baseUrl);
+        json.put("complete-url", completeUrl);
+        json.put("type", type.name());
+        json.put("name", name);
+        json.put("description", description);
+        json.put("icon-url", iconUrl);
+        json.put("background-color", backgroundColor);
+        json.put("background-url", backgroundUrl);
+        json.put("allow-under-18", allowUnder18);
+        json.put("nsfw", nsfw);
+        
+        return json;
+    }
+    
+    public Blog fromJson(JSONObject json) {
+        blogId = UUID.fromString(json.getString("id"));
+        baseUrl = json.getString("base-url");
+        completeUrl = json.getString("complete-url");
+        type = BlogType.valueOf(json.getString("type"));
+        name = json.getString("name");
+        description = json.getString("description");
+        iconUrl = json.getString("icon-url");
+        backgroundColor = json.getString("background-color");
+        backgroundUrl = json.getString("background-url");
+        allowUnder18 = json.getBoolean("allow-under-18");
+        nsfw = json.getBoolean("nsfw");
+        
+        return this;
     }
 }
