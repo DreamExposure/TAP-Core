@@ -13,7 +13,7 @@ import java.util.UUID;
  * Company Website: https://www.dreamexposure.org
  * Contact: nova@dreamexposure.org
  */
-public class Blog {
+public class Blog implements IBlog {
     private UUID blogId;
     
     private String baseUrl;
